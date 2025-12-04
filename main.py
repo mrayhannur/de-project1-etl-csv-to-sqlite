@@ -66,6 +66,9 @@ def main():
     logging.info("Starting ETL process...\n")
     
     # Checking csv file existence
+    if not os.path.exists("db"):
+        os.makedirs("db")
+        
     if not os.path.exists(csv_path):
         logging.info(f"Error: The file {csv_path} does not exist.")
         return
