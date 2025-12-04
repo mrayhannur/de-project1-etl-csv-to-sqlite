@@ -3,8 +3,10 @@ import sqlite3
 import os
 import logging
 
+# Set up logging
 logging.basicConfig(level=logging.INFO)
 
+# == Functions for ETL process ==
 def load_csv(path):
     logging.info(f"== Loading CSV file from: {path} ==")
     df = pd.read_csv(path)
@@ -52,20 +54,23 @@ def write_to_sqlite(df, conn, table_name):
     })
     logging.info(f"Data written to table '{table_name}' successfully.\n")
 
-
+# == Main ETL process ==
 def main():
     # Define file paths
     csv_path = "data\\netflix1.csv"
     db_path = "db\\netflix1.db"
+
+    # Ensure directories exist
+    os.makedirs(os.path.dirname(db_path), exist_ok=True)
     
-    # Load CSV data into DataFrame
     logging.info("Starting ETL process...\n")
     
-    # checking csv file existence
+    # Checking csv file existence
     if not os.path.exists(csv_path):
         logging.info(f"Error: The file {csv_path} does not exist.")
         return
     
+    # Load CSV data into DataFrame
     df = load_csv(csv_path)
 
     # Transform data
